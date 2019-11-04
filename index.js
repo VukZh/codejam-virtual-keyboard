@@ -1,5 +1,21 @@
-localStorage.setItem('lang', 'eng');
+if (!localStorage.getItem('lang')) {
+    localStorage.setItem('lang', 'eng');
+}
 let keyMousePress;
+let keyButtonPress;
+let setLang1;
+let setLang2;
+let setLang = () => {
+    if (localStorage.getItem('lang') === 'eng') {
+        setLang1 = 1;
+        setLang2 = 2;
+    } else {
+        setLang1 = 3;
+        setLang2 = 4;
+    }
+};
+setLang();
+
 //alert(localStorage.getItem('lang') );
 
 //document.addEventListener('keypress', (e) => console.log('111 ' + e.code));
@@ -40,14 +56,14 @@ const setButton = (gridArea, arr, typeButton) => {
         tmp.classList.add('buttonFn');
     }
     tmp.arrChar = arr;
-    tmp.innerHTML = tmp.arrChar[1];
-    tmp.currChar = tmp.arrChar[1];
+    tmp.innerHTML = tmp.arrChar[setLang1];
+    tmp.currChar = tmp.arrChar[setLang1];
     return tmp;
 };
 
 let kbd = document.querySelector('.keyboard');
 
-let K1_1 = setButton('k1-1', ['Backquote', '`', '~', 'ё', '']);
+let K1_1 = setButton('k1-1', ['Backquote', '`', '~', 'ё', 'Ё']);
 kbd.appendChild(K1_1);
 let K1_2 = setButton('k1-2', ['Digit1', '1', '!', '1', '!']);
 kbd.appendChild(K1_2);
@@ -131,12 +147,12 @@ let K3_11 = setButton('k3-11', ['Semicolon', ';', ':', 'ж', 'Ж']);
 kbd.appendChild(K3_11);
 let K3_12 = setButton('k3-12', ['Quote', "'", '"', 'э', 'Э']);
 kbd.appendChild(K3_12);
-let K3_13 = setButton('k3-13', ['BackSlash', '\\', '|', '\\', '/']);
+let K3_13 = setButton('k3-13', ['Backslash', '\\', '|', '\\', '/']);
 kbd.appendChild(K3_13);
 
 let K4_1 = setButton('k4-1', ['ShiftLeft', 'Shift', 'Shift', 'Shift', 'Shift'], 'fn');
 kbd.appendChild(K4_1);
-let K4_2 = setButton('k4-2', ['IntlBackSlash', '\\', '|', '\\', '/']);
+let K4_2 = setButton('k4-2', ['IntlBackslash', '\\', '|', '\\', '/']);
 kbd.appendChild(K4_2);
 let K4_3 = setButton('k4-3', ['KeyZ', 'z', 'Z', 'я', 'Я']);
 kbd.appendChild(K4_3);
@@ -187,6 +203,14 @@ let changeKey = (num) => {
         el.currChar = el.arrChar[num];
     });
 }
+let searchButton = (str) => {
+    allKey.forEach(el => {
+        if (el.arrChar[0] === str) {
+            keyButtonPress = el;
+            console.log(keyButtonPress.innerHTML);
+        };
+    })
+}
 
 //--------------------------------------------------------
 
@@ -196,14 +220,14 @@ kbd.addEventListener('mousedown', e => {
         keyMousePress.classList.add('buttonPress');
         keyMousePress.classList.toggle('buttonCapsPress');
         if (keyMousePress.classList.contains('buttonCapsPress')) {
-            changeKey(2);
+            changeKey(setLang2);
         } else {
-            changeKey(1);
+            changeKey(setLang1);
         }
         //        console.log('caps ');
     } else if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) {
         keyMousePress.classList.add('buttonPress');
-        changeKey(2);
+        changeKey(setLang1);
     } else if (keyMousePress.classList.contains('button')) {
 
         //        console.log('+ ' + keyMousePress);
@@ -225,7 +249,7 @@ document.addEventListener('mouseup', e => {
 
     if (keyMousePress) {
         if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) {
-            changeKey(1);
+            changeKey(setLang1);
             keyMousePress.classList.remove('buttonPress');
         } else {
             keyMousePress.classList.remove('buttonPress');
@@ -234,4 +258,72 @@ document.addEventListener('mouseup', e => {
     };
 });
 
-window.addEventListener('keypress', (e) => console.log('111 ' + e.code));
+document.addEventListener('keydown', (e) => {
+    //    e.preventDefault();
+    console.log('---> ' + e.code);
+    searchButton(e.code);
+    //    console.log ('>>> ' + keyButtonPress.arrChar[0]);
+    keyButtonPress.classList.add('buttonPress');
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+        //        changeKey(setLang2);
+
+
+
+        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+            changeKey(setLang1);
+        } else {
+            changeKey(setLang2);
+        }
+
+
+
+    } else if (e.code === 'CapsLock') {
+        keyButtonPress.classList.toggle('buttonCapsPress');
+        if (keyButtonPress.classList.contains('buttonCapsPress')) {
+            changeKey(setLang2);
+        } else {
+            changeKey(setLang1);
+        }
+
+    }
+    if (kbd.querySelector('.k5-1').classList.contains('buttonPress') &&
+        kbd.querySelector('.k5-2').classList.contains('buttonPress') || kbd.querySelector('.k5-4').classList.contains('buttonPress') && kbd.querySelector('.k5-5').classList.contains('buttonPress')) {
+        if (localStorage.getItem('lang') === 'eng') {
+            localStorage.setItem('lang', 'rus');
+        } else {
+            localStorage.setItem('lang', 'eng');
+        }
+        console.log('>>> ' + localStorage.getItem('lang'));
+        setLang();
+        console.log('1 ' + setLang1 + ' 2 ' + setLang2);
+        changeKey(setLang1);
+        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+            changeKey(setLang2);
+        } else {
+            changeKey(setLang1);
+        }
+    }
+
+
+})
+
+document.addEventListener('keyup', (e) => {
+    //    console.log(e.code);
+    if (keyButtonPress) {
+        keyButtonPress.classList.remove('buttonPress');
+        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+            if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+                changeKey(setLang2);
+            } else {
+                changeKey(setLang1);
+            }
+        }
+    }
+    allKey.forEach(el => {
+        el.classList.remove('buttonPress');
+    });
+
+
+
+
+})
