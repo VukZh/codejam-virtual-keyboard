@@ -332,7 +332,7 @@ document.addEventListener('keyup', (e) => { // restore keyboard after keyup
             } else {
                 changeKey(setLang1);
             }
-        }
+        }       
     }
     allKey.forEach(el => {
         el.classList.remove('buttonPress');
