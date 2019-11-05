@@ -1,11 +1,11 @@
-if (!localStorage.getItem('lang')) {
+if (!localStorage.getItem('lang')) { // check language
     localStorage.setItem('lang', 'eng');
 }
-let keyMousePress;
-let keyButtonPress;
-let setLang1;
-let setLang2;
-let setLang = () => {
+let keyMousePress; // press button from mouse
+let keyButtonPress; // press button from key
+let setLang1; // normal key index from array key
+let setLang2; // caps key index from array key
+let setLang = () => { // set or change language keyboard
     if (localStorage.getItem('lang') === 'eng') {
         setLang1 = 1;
         setLang2 = 2;
@@ -14,23 +14,25 @@ let setLang = () => {
         setLang2 = 4;
     }
 };
+
 setLang();
 
-//alert(localStorage.getItem('lang') );
-
-//document.addEventListener('keypress', (e) => console.log('111 ' + e.code));
-//let charButton;
-
-let wrapper = document.createElement('main');
+let wrapper = document.createElement('main'); // wrapper
 wrapper.classList.add('wrapper');
 document.body.appendChild(wrapper);
 
-let textArea;
+let textArea; // add textarea
 textArea = document.createElement('textarea');
 textArea.classList.add('input_area');
 document.querySelector('.wrapper').appendChild(textArea);
 textArea.id = 'textArea';
-textArea.addEventListener('pressButton', e => {
+
+
+textArea.addEventListener('keypress', e => e.preventDefault()); // preventDefault for keyboard
+textArea.addEventListener('keyup', e => e.preventDefault());
+textArea.addEventListener('keydown', e => e.preventDefault());
+
+textArea.addEventListener('pressButton', e => { // add custom event listener from mouse
     if (e.charButton === 'Enter') {
         textArea.value += '\n';
     } else if (e.charButton === 'Backspace') {
@@ -44,24 +46,40 @@ textArea.addEventListener('pressButton', e => {
     }
 });
 
-let keyBoard = document.createElement('div');
+textArea.addEventListener('pressKey', e => { // add custom event listener from keyboard
+    if (e.charKey === 'Enter') {
+        textArea.value += '\n';
+    } else if (e.charKey === 'Backspace') {
+        textArea.value = textArea.value.slice(0, textArea.value.length - 1);
+    } else if (e.charKey === 'Del') {
+        textArea.value = textArea.value.slice(1, textArea.value.length);
+    } else if (e.charKey === 'Tab') {
+        textArea.value += '\t';
+    } else {
+        textArea.value += e.charKey;
+    }
+});
+
+
+
+let keyBoard = document.createElement('div'); // add keyboard
 keyBoard.classList.add('keyboard');
 document.querySelector('.wrapper').appendChild(keyBoard);
 
-const setButton = (gridArea, arr, typeButton) => {
+const setButton = (gridArea, arr, typeButton) => { // function for create button
     let tmp = document.createElement('div');
     tmp.classList.add(gridArea);
     tmp.classList.add('button');
     if (typeButton === 'fn') {
         tmp.classList.add('buttonFn');
     }
-    tmp.arrChar = arr;
+    tmp.arrChar = arr; // array char for button
     tmp.innerHTML = tmp.arrChar[setLang1];
     tmp.currChar = tmp.arrChar[setLang1];
     return tmp;
 };
 
-let kbd = document.querySelector('.keyboard');
+let kbd = document.querySelector('.keyboard'); // add all key
 
 let K1_1 = setButton('k1-1', ['Backquote', '`', '~', 'ё', 'Ё']);
 kbd.appendChild(K1_1);
@@ -196,27 +214,28 @@ kbd.appendChild(K5_7);
 let K5_8 = setButton('k5-8', ['ArrowRight', '→', '→', '→', '→'], 'fn');
 kbd.appendChild(K5_8);
 
-let allKey = kbd.querySelectorAll('.button');
-let changeKey = (num) => {
+let allKey = kbd.querySelectorAll('.button'); // array all button from html
+
+let changeKey = (num) => { // change char keyboard and current char for all button
     allKey.forEach(el => {
         el.innerHTML = el.arrChar[num];
         el.currChar = el.arrChar[num];
     });
 }
-let searchButton = (str) => {
+let searchButton = (str) => { // search button from press key
     allKey.forEach(el => {
         if (el.arrChar[0] === str) {
             keyButtonPress = el;
-            console.log(keyButtonPress.innerHTML);
+            //            console.log(keyButtonPress.innerHTML);
         };
     })
 }
 
 //--------------------------------------------------------
 
-kbd.addEventListener('mousedown', e => {
+kbd.addEventListener('mousedown', e => { // event listener for keyboard from mouse
     keyMousePress = e.target;
-    if (keyMousePress.classList.contains('k3-1')) {
+    if (keyMousePress.classList.contains('k3-1')) { // check CapsLook
         keyMousePress.classList.add('buttonPress');
         keyMousePress.classList.toggle('buttonCapsPress');
         if (keyMousePress.classList.contains('buttonCapsPress')) {
@@ -225,17 +244,17 @@ kbd.addEventListener('mousedown', e => {
             changeKey(setLang1);
         }
         //        console.log('caps ');
-    } else if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) {
+    } else if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) { // check Shift
         keyMousePress.classList.add('buttonPress');
         changeKey(setLang1);
-    } else if (keyMousePress.classList.contains('button')) {
-
-        //        console.log('+ ' + keyMousePress);
-        //        keyMousePress.innerHTML = e.target.arrChar[1];
+        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+            changeKey(setLang1);
+        } else {
+            changeKey(setLang2);
+        }
+    } else if (keyMousePress.classList.contains('button')) { // create event for textarea
         keyMousePress.classList.add('buttonPress');
-        if (!e.target.classList.contains('buttonFn') || e.target.classList.contains('k4-13') || e.target.classList.contains('k5-6') || e.target.classList.contains('k5-7') || e.target.classList.contains('k5-8') || e.target.classList.contains('k5-3') || e.target.classList.contains('k1-14') || e.target.classList.contains('k2-14') || e.target.classList.contains('k2-15') || e.target.classList.contains('k2-1')
-
-        ) {
+        if (!e.target.classList.contains('buttonFn') || e.target.classList.contains('k4-13') || e.target.classList.contains('k5-6') || e.target.classList.contains('k5-7') || e.target.classList.contains('k5-8') || e.target.classList.contains('k5-3') || e.target.classList.contains('k1-14') || e.target.classList.contains('k2-14') || e.target.classList.contains('k2-15') || e.target.classList.contains('k2-1')) {
             let event = new Event('pressButton', {
                 bubbles: true
             });
@@ -245,69 +264,65 @@ kbd.addEventListener('mousedown', e => {
     };
 });
 
-document.addEventListener('mouseup', e => {
-
+document.addEventListener('mouseup', e => { // restore keyboard after mouseup
     if (keyMousePress) {
         if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) {
-            changeKey(setLang1);
+            if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+                changeKey(setLang2);
+            } else {
+                changeKey(setLang1);
+            }
             keyMousePress.classList.remove('buttonPress');
         } else {
             keyMousePress.classList.remove('buttonPress');
         }
-
     };
 });
 
-document.addEventListener('keydown', (e) => {
-    //    e.preventDefault();
-    console.log('---> ' + e.code);
+document.addEventListener('keydown', (e) => { // event listener for keyboard from real keyboard
+    //    console.log('---> ' + e.code);
     searchButton(e.code);
-    //    console.log ('>>> ' + keyButtonPress.arrChar[0]);
     keyButtonPress.classList.add('buttonPress');
-    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-        //        changeKey(setLang2);
-
-
-
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { // check Shift
         if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
             changeKey(setLang1);
         } else {
             changeKey(setLang2);
         }
-
-
-
-    } else if (e.code === 'CapsLock') {
+    } else if (e.code === 'CapsLock') { // check CapsLook
         keyButtonPress.classList.toggle('buttonCapsPress');
         if (keyButtonPress.classList.contains('buttonCapsPress')) {
             changeKey(setLang2);
         } else {
             changeKey(setLang1);
         }
-
-    }
-    if (kbd.querySelector('.k5-1').classList.contains('buttonPress') &&
+    } else if (kbd.querySelector('.k5-1').classList.contains('buttonPress') &&
         kbd.querySelector('.k5-2').classList.contains('buttonPress') || kbd.querySelector('.k5-4').classList.contains('buttonPress') && kbd.querySelector('.k5-5').classList.contains('buttonPress')) {
-        if (localStorage.getItem('lang') === 'eng') {
+        if (localStorage.getItem('lang') === 'eng') { // set new language
             localStorage.setItem('lang', 'rus');
         } else {
             localStorage.setItem('lang', 'eng');
         }
-        console.log('>>> ' + localStorage.getItem('lang'));
+        //        console.log('>>> ' + localStorage.getItem('lang'));
         setLang();
-        console.log('1 ' + setLang1 + ' 2 ' + setLang2);
         changeKey(setLang1);
         if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
             changeKey(setLang2);
         } else {
             changeKey(setLang1);
         }
-    }
-
-
+    } else if (keyButtonPress.classList.contains('button')) { // create event for textarea
+        if (!keyButtonPress.classList.contains('buttonFn') || keyButtonPress.classList.contains('k4-13') || keyButtonPress.classList.contains('k5-6') || keyButtonPress.classList.contains('k5-7') || keyButtonPress.classList.contains('k5-8') || keyButtonPress.classList.contains('k5-3') || keyButtonPress.classList.contains('k1-14') || keyButtonPress.classList.contains('k2-14') || keyButtonPress.classList.contains('k2-15') || keyButtonPress.classList.contains('k2-1')) {
+            let event = new Event('pressKey', {
+                bubbles: true
+            });
+            event.charKey = keyButtonPress.currChar;
+            textArea.dispatchEvent(event);
+        };
+    };
 })
 
-document.addEventListener('keyup', (e) => {
+document.addEventListener('keyup', (e) => { // restore keyboard after keyup
     //    console.log(e.code);
     if (keyButtonPress) {
         keyButtonPress.classList.remove('buttonPress');
@@ -322,8 +337,4 @@ document.addEventListener('keyup', (e) => {
     allKey.forEach(el => {
         el.classList.remove('buttonPress');
     });
-
-
-
-
 })
