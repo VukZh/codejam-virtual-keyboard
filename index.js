@@ -1,340 +1,391 @@
-if (!localStorage.getItem('lang')) { // check language
-    localStorage.setItem('lang', 'eng');
+if (!localStorage.getItem('lang')) {
+  // check language
+  localStorage.setItem('lang', 'eng');
 }
 let keyMousePress; // press button from mouse
 let keyButtonPress; // press button from key
 let setLang1; // normal key index from array key
 let setLang2; // caps key index from array key
-let setLang = () => { // set or change language keyboard
-    if (localStorage.getItem('lang') === 'eng') {
-        setLang1 = 1;
-        setLang2 = 2;
-    } else {
-        setLang1 = 3;
-        setLang2 = 4;
-    }
+const setLang = () => {
+  // set or change language keyboard
+  if (localStorage.getItem('lang') === 'eng') {
+    setLang1 = 1;
+    setLang2 = 2;
+  } else {
+    setLang1 = 3;
+    setLang2 = 4;
+  }
 };
 
 setLang();
 
-let wrapper = document.createElement('main'); // wrapper
+const wrapper = document.createElement('main'); // wrapper
 wrapper.classList.add('wrapper');
 document.body.appendChild(wrapper);
 
-let textArea; // add textarea
-textArea = document.createElement('textarea');
+const textArea = document.createElement('textarea'); // add textarea
 textArea.classList.add('input_area');
 document.querySelector('.wrapper').appendChild(textArea);
 textArea.id = 'textArea';
 
+textArea.addEventListener('keypress', (e) => e.preventDefault()); // preventDefault for keyboard
+textArea.addEventListener('keyup', (e) => e.preventDefault());
+textArea.addEventListener('keydown', (e) => e.preventDefault());
 
-textArea.addEventListener('keypress', e => e.preventDefault()); // preventDefault for keyboard
-textArea.addEventListener('keyup', e => e.preventDefault());
-textArea.addEventListener('keydown', e => e.preventDefault());
-
-textArea.addEventListener('pressButton', e => { // add custom event listener from mouse
-    if (e.charButton === 'Enter') {
-        textArea.value += '\n';
-    } else if (e.charButton === 'Backspace') {
-        textArea.value = textArea.value.slice(0, textArea.value.length - 1);
-    } else if (e.charButton === 'Del') {
-        textArea.value = textArea.value.slice(1, textArea.value.length);
-    } else if (e.charButton === 'Tab') {
-        textArea.value += '\t';
-    } else {
-        textArea.value += e.charButton;
-    }
+textArea.addEventListener('pressButton', (e) => {
+  // add custom event listener from mouse
+  if (e.charButton === 'Enter') {
+    textArea.value += '\n';
+  } else if (e.charButton === 'Backspace') {
+    textArea.value = textArea.value.slice(0, textArea.value.length - 1);
+  } else if (e.charButton === 'Del') {
+    textArea.value = textArea.value.slice(1, textArea.value.length);
+  } else if (e.charButton === 'Tab') {
+    textArea.value += '\t';
+  } else {
+    textArea.value += e.charButton;
+  }
 });
 
-textArea.addEventListener('pressKey', e => { // add custom event listener from keyboard
-    if (e.charKey === 'Enter') {
-        textArea.value += '\n';
-    } else if (e.charKey === 'Backspace') {
-        textArea.value = textArea.value.slice(0, textArea.value.length - 1);
-    } else if (e.charKey === 'Del') {
-        textArea.value = textArea.value.slice(1, textArea.value.length);
-    } else if (e.charKey === 'Tab') {
-        textArea.value += '\t';
-    } else {
-        textArea.value += e.charKey;
-    }
+textArea.addEventListener('pressKey', (e) => {
+  // add custom event listener from keyboard
+  if (e.charKey === 'Enter') {
+    textArea.value += '\n';
+  } else if (e.charKey === 'Backspace') {
+    textArea.value = textArea.value.slice(0, textArea.value.length - 1);
+  } else if (e.charKey === 'Del') {
+    textArea.value = textArea.value.slice(1, textArea.value.length);
+  } else if (e.charKey === 'Tab') {
+    textArea.value += '\t';
+  } else {
+    textArea.value += e.charKey;
+  }
 });
 
-
-
-let keyBoard = document.createElement('div'); // add keyboard
+const keyBoard = document.createElement('div'); // add keyboard
 keyBoard.classList.add('keyboard');
 document.querySelector('.wrapper').appendChild(keyBoard);
 
-const setButton = (gridArea, arr, typeButton) => { // function for create button
-    let tmp = document.createElement('div');
-    tmp.classList.add(gridArea);
-    tmp.classList.add('button');
-    if (typeButton === 'fn') {
-        tmp.classList.add('buttonFn');
-    }
-    tmp.arrChar = arr; // array char for button
-    tmp.innerHTML = tmp.arrChar[setLang1];
-    tmp.currChar = tmp.arrChar[setLang1];
-    return tmp;
+const setButton = (gridArea, arr, typeButton) => {
+  // function for create button
+  const tmp = document.createElement('div');
+  tmp.classList.add(gridArea);
+  tmp.classList.add('button');
+  if (typeButton === 'fn') {
+    tmp.classList.add('buttonFn');
+  }
+  tmp.arrChar = arr; // array char for button
+  tmp.innerHTML = tmp.arrChar[setLang1];
+  tmp.currChar = tmp.arrChar[setLang1];
+  return tmp;
 };
 
-let kbd = document.querySelector('.keyboard'); // add all key
+const kbd = document.querySelector('.keyboard'); // add all key
 
-let K1_1 = setButton('k1-1', ['Backquote', '`', '~', 'ё', 'Ё']);
+const K1_1 = setButton('k1-1', ['Backquote', '`', '~', 'ё', 'Ё']);
 kbd.appendChild(K1_1);
-let K1_2 = setButton('k1-2', ['Digit1', '1', '!', '1', '!']);
+const K1_2 = setButton('k1-2', ['Digit1', '1', '!', '1', '!']);
 kbd.appendChild(K1_2);
-let K1_3 = setButton('k1-3', ['Digit2', '2', '@', '2', '"']);
+const K1_3 = setButton('k1-3', ['Digit2', '2', '@', '2', "'"]);
 kbd.appendChild(K1_3);
-let K1_4 = setButton('k1-4', ['Digit3', '3', '#', '3', '№']);
+const K1_4 = setButton('k1-4', ['Digit3', '3', '#', '3', '№']);
 kbd.appendChild(K1_4);
-let K1_5 = setButton('k1-5', ['Digit4', '4', '$', '4', ';']);
+const K1_5 = setButton('k1-5', ['Digit4', '4', '$', '4', ';']);
 kbd.appendChild(K1_5);
-let K1_6 = setButton('k1-6', ['Digit5', '5', '%', '5', '%']);
+const K1_6 = setButton('k1-6', ['Digit5', '5', '%', '5', '%']);
 kbd.appendChild(K1_6);
-let K1_7 = setButton('k1-7', ['Digit6', '6', '^', '6', ':']);
+const K1_7 = setButton('k1-7', ['Digit6', '6', '^', '6', ':']);
 kbd.appendChild(K1_7);
-let K1_8 = setButton('k1-8', ['Digit7', '7', '&', '7', '?']);
+const K1_8 = setButton('k1-8', ['Digit7', '7', '&', '7', '?']);
 kbd.appendChild(K1_8);
-let K1_9 = setButton('k1-9', ['Digit8', '8', '*', '8', '*']);
+const K1_9 = setButton('k1-9', ['Digit8', '8', '*', '8', '*']);
 kbd.appendChild(K1_9);
-let K1_10 = setButton('k1-10', ['Digit9', '9', '(', '9', '(']);
+const K1_10 = setButton('k1-10', ['Digit9', '9', '(', '9', '(']);
 kbd.appendChild(K1_10);
-let K1_11 = setButton('k1-11', ['Digit0', '0', ')', '0', ')']);
+const K1_11 = setButton('k1-11', ['Digit0', '0', ')', '0', ')']);
 kbd.appendChild(K1_11);
-let K1_12 = setButton('k1-12', ['Minus', '-', '_', '-', '_']);
+const K1_12 = setButton('k1-12', ['Minus', '-', '_', '-', '_']);
 kbd.appendChild(K1_12);
-let K1_13 = setButton('k1-13', ['Equal', '=', '+', '=', '+']);
+const K1_13 = setButton('k1-13', ['Equal', '=', '+', '=', '+']);
 kbd.appendChild(K1_13);
-let K1_14 = setButton('k1-14', ['Backspace', 'Backspace', 'Backspace', 'Backspace', 'Backspace'], 'fn');
+const K1_14 = setButton(
+  'k1-14',
+  ['Backspace', 'Backspace', 'Backspace', 'Backspace', 'Backspace'],
+  'fn',
+);
 kbd.appendChild(K1_14);
 
-let K2_1 = setButton('k2-1', ['Tab', 'Tab', 'Tab', 'Tab', 'Tab'], 'fn');
+const K2_1 = setButton('k2-1', ['Tab', 'Tab', 'Tab', 'Tab', 'Tab'], 'fn');
 kbd.appendChild(K2_1);
-let K2_2 = setButton('k2-2', ['KeyQ', 'q', 'Q', 'й', 'Й']);
+const K2_2 = setButton('k2-2', ['KeyQ', 'q', 'Q', 'й', 'Й']);
 kbd.appendChild(K2_2);
-let K2_3 = setButton('k2-3', ['KeyW', 'w', 'W', 'ц', 'Ц']);
+const K2_3 = setButton('k2-3', ['KeyW', 'w', 'W', 'ц', 'Ц']);
 kbd.appendChild(K2_3);
-let K2_4 = setButton('k2-4', ['KeyE', 'e', 'E', 'у', 'У']);
+const K2_4 = setButton('k2-4', ['KeyE', 'e', 'E', 'у', 'У']);
 kbd.appendChild(K2_4);
-let K2_5 = setButton('k2-5', ['KeyR', 'r', 'R', 'к', 'К']);
+const K2_5 = setButton('k2-5', ['KeyR', 'r', 'R', 'к', 'К']);
 kbd.appendChild(K2_5);
-let K2_6 = setButton('k2-6', ['KeyT', 't', 'T', 'е', 'Е']);
+const K2_6 = setButton('k2-6', ['KeyT', 't', 'T', 'е', 'Е']);
 kbd.appendChild(K2_6);
-let K2_7 = setButton('k2-7', ['KeyY', 'y', 'Y', 'н', 'Н']);
+const K2_7 = setButton('k2-7', ['KeyY', 'y', 'Y', 'н', 'Н']);
 kbd.appendChild(K2_7);
-let K2_8 = setButton('k2-8', ['KeyU', 'u', 'U', 'г', 'Г']);
+const K2_8 = setButton('k2-8', ['KeyU', 'u', 'U', 'г', 'Г']);
 kbd.appendChild(K2_8);
-let K2_9 = setButton('k2-9', ['KeyI', 'i', 'I', 'ш', 'Ш']);
+const K2_9 = setButton('k2-9', ['KeyI', 'i', 'I', 'ш', 'Ш']);
 kbd.appendChild(K2_9);
-let K2_10 = setButton('k2-10', ['KeyO', 'o', 'O', 'щ', 'Щ']);
+const K2_10 = setButton('k2-10', ['KeyO', 'o', 'O', 'щ', 'Щ']);
 kbd.appendChild(K2_10);
-let K2_11 = setButton('k2-11', ['KeyP', 'p', 'P', 'з', 'З']);
+const K2_11 = setButton('k2-11', ['KeyP', 'p', 'P', 'з', 'З']);
 kbd.appendChild(K2_11);
-let K2_12 = setButton('k2-12', ['BracketLeft', '[', '{', 'х', 'Х']);
+const K2_12 = setButton('k2-12', ['BracketLeft', '[', '{', 'х', 'Х']);
 kbd.appendChild(K2_12);
-let K2_13 = setButton('k2-13', ['BracketRight', ']', '}', 'ъ', 'Ъ']);
+const K2_13 = setButton('k2-13', ['BracketRight', ']', '}', 'ъ', 'Ъ']);
 kbd.appendChild(K2_13);
-let K2_14 = setButton('k2-14', ['Delete', 'Del', 'Del', 'Del', 'Del'], 'fn');
+const K2_14 = setButton('k2-14', ['Delete', 'Del', 'Del', 'Del', 'Del'], 'fn');
 kbd.appendChild(K2_14);
-let K2_15 = setButton('k2-15', ['Enter', 'Enter', 'Enter', 'Enter', 'Enter'], 'fn');
+const K2_15 = setButton(
+  'k2-15',
+  ['Enter', 'Enter', 'Enter', 'Enter', 'Enter'],
+  'fn',
+);
 kbd.appendChild(K2_15);
 
-let K3_1 = setButton('k3-1', ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'], 'fn');
+const K3_1 = setButton(
+  'k3-1',
+  ['CapsLock', 'CapsLock', 'CapsLock', 'CapsLock', 'CapsLock'],
+  'fn',
+);
 kbd.appendChild(K3_1);
-let K3_2 = setButton('k3-2', ['KeyA', 'a', 'A', 'ф', 'Ф']);
+const K3_2 = setButton('k3-2', ['KeyA', 'a', 'A', 'ф', 'Ф']);
 kbd.appendChild(K3_2);
-let K3_3 = setButton('k3-3', ['KeyS', 's', 'S', 'ы', 'Ы']);
+const K3_3 = setButton('k3-3', ['KeyS', 's', 'S', 'ы', 'Ы']);
 kbd.appendChild(K3_3);
-let K3_4 = setButton('k3-4', ['KeyD', 'd', 'D', 'в', 'В']);
+const K3_4 = setButton('k3-4', ['KeyD', 'd', 'D', 'в', 'В']);
 kbd.appendChild(K3_4);
-let K3_5 = setButton('k3-5', ['KeyF', 'f', 'F', 'а', 'А']);
+const K3_5 = setButton('k3-5', ['KeyF', 'f', 'F', 'а', 'А']);
 kbd.appendChild(K3_5);
-let K3_6 = setButton('k3-6', ['KeyG', 'g', 'G', 'п', 'П']);
+const K3_6 = setButton('k3-6', ['KeyG', 'g', 'G', 'п', 'П']);
 kbd.appendChild(K3_6);
-let K3_7 = setButton('k3-7', ['KeyH', 'h', 'H', 'р', 'Р']);
+const K3_7 = setButton('k3-7', ['KeyH', 'h', 'H', 'р', 'Р']);
 kbd.appendChild(K3_7);
-let K3_8 = setButton('k3-8', ['KeyJ', 'j', 'J', 'о', 'О']);
+const K3_8 = setButton('k3-8', ['KeyJ', 'j', 'J', 'о', 'О']);
 kbd.appendChild(K3_8);
-let K3_9 = setButton('k3-9', ['KeyK', 'k', 'K', 'л', 'Л']);
+const K3_9 = setButton('k3-9', ['KeyK', 'k', 'K', 'л', 'Л']);
 kbd.appendChild(K3_9);
-let K3_10 = setButton('k3-10', ['KeyL', 'l', 'L', 'д', 'Д']);
+const K3_10 = setButton('k3-10', ['KeyL', 'l', 'L', 'д', 'Д']);
 kbd.appendChild(K3_10);
-let K3_11 = setButton('k3-11', ['Semicolon', ';', ':', 'ж', 'Ж']);
+const K3_11 = setButton('k3-11', ['Semicolon', ';', ':', 'ж', 'Ж']);
 kbd.appendChild(K3_11);
-let K3_12 = setButton('k3-12', ['Quote', "'", '"', 'э', 'Э']);
+const K3_12 = setButton('k3-12', ['Quote', "'", '"', 'э', 'Э']);
 kbd.appendChild(K3_12);
-let K3_13 = setButton('k3-13', ['Backslash', '\\', '|', '\\', '/']);
+const K3_13 = setButton('k3-13', ['Backslash', '\\', '|', '\\', '/']);
 kbd.appendChild(K3_13);
 
-let K4_1 = setButton('k4-1', ['ShiftLeft', 'Shift', 'Shift', 'Shift', 'Shift'], 'fn');
+const K4_1 = setButton(
+  'k4-1',
+  ['ShiftLeft', 'Shift', 'Shift', 'Shift', 'Shift'],
+  'fn',
+);
 kbd.appendChild(K4_1);
-let K4_2 = setButton('k4-2', ['IntlBackslash', '\\', '|', '\\', '/']);
+const K4_2 = setButton('k4-2', ['IntlBackslash', '\\', '|', '\\', '/']);
 kbd.appendChild(K4_2);
-let K4_3 = setButton('k4-3', ['KeyZ', 'z', 'Z', 'я', 'Я']);
+const K4_3 = setButton('k4-3', ['KeyZ', 'z', 'Z', 'я', 'Я']);
 kbd.appendChild(K4_3);
-let K4_4 = setButton('k4-4', ['KeyX', 'x', 'X', 'ч', 'Ч']);
+const K4_4 = setButton('k4-4', ['KeyX', 'x', 'X', 'ч', 'Ч']);
 kbd.appendChild(K4_4);
-let K4_5 = setButton('k4-5', ['KeyC', 'c', 'C', 'с', 'С']);
+const K4_5 = setButton('k4-5', ['KeyC', 'c', 'C', 'с', 'С']);
 kbd.appendChild(K4_5);
-let K4_6 = setButton('k4-6', ['KeyV', 'v', 'V', 'м', 'М']);
+const K4_6 = setButton('k4-6', ['KeyV', 'v', 'V', 'м', 'М']);
 kbd.appendChild(K4_6);
-let K4_7 = setButton('k4-7', ['KeyB', 'b', 'B', 'и', 'И']);
+const K4_7 = setButton('k4-7', ['KeyB', 'b', 'B', 'и', 'И']);
 kbd.appendChild(K4_7);
-let K4_8 = setButton('k4-8', ['KeyN', 'n', 'N', 'т', 'Т']);
+const K4_8 = setButton('k4-8', ['KeyN', 'n', 'N', 'т', 'Т']);
 kbd.appendChild(K4_8);
-let K4_9 = setButton('k4-9', ['KeyM', 'm', 'M', 'ь', 'Ь']);
+const K4_9 = setButton('k4-9', ['KeyM', 'm', 'M', 'ь', 'Ь']);
 kbd.appendChild(K4_9);
-let K4_10 = setButton('k4-10', ['Comma', ',', '<', 'б', 'Б']);
+const K4_10 = setButton('k4-10', ['Comma', ',', '<', 'б', 'Б']);
 kbd.appendChild(K4_10);
-let K4_11 = setButton('k4-11', ['Period', '.', '>', 'ю', 'Ю']);
+const K4_11 = setButton('k4-11', ['Period', '.', '>', 'ю', 'Ю']);
 kbd.appendChild(K4_11);
-let K4_12 = setButton('k4-12', ['Slash', '/', '?', '.', ',']);
+const K4_12 = setButton('k4-12', ['Slash', '/', '?', '.', ',']);
 kbd.appendChild(K4_12);
-let K4_13 = setButton('k4-13', ['ArrowUp', '↑', '↑', '↑', '↑'], 'fn');
+const K4_13 = setButton('k4-13', ['ArrowUp', '↑', '↑', '↑', '↑'], 'fn');
 kbd.appendChild(K4_13);
-let K4_14 = setButton('k4-14', ['ShiftRight', 'Shift', 'Shift', 'Shift', 'Shift'], 'fn');
+const K4_14 = setButton(
+  'k4-14',
+  ['ShiftRight', 'Shift', 'Shift', 'Shift', 'Shift'],
+  'fn',
+);
 kbd.appendChild(K4_14);
 
-let K5_1 = setButton('k5-1', ['ControlLeft', 'Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'], 'fn');
+const K5_1 = setButton(
+  'k5-1',
+  ['ControlLeft', 'Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'],
+  'fn',
+);
 kbd.appendChild(K5_1);
-let K5_2 = setButton('k5-2', ['AltLeft', 'Alt', 'Alt', 'Alt', 'Alt'], 'fn');
+const K5_2 = setButton('k5-2', ['AltLeft', 'Alt', 'Alt', 'Alt', 'Alt'], 'fn');
 kbd.appendChild(K5_2);
-let K5_3 = setButton('k5-3', ['Space', ' ', ' ', ' ', ' '], 'fn');
+const K5_3 = setButton('k5-3', ['Space', ' ', ' ', ' ', ' '], 'fn');
 kbd.appendChild(K5_3);
-let K5_4 = setButton('k5-4', ['AltRight', 'Alt', 'Alt', 'Alt', 'Alt'], 'fn');
+const K5_4 = setButton('k5-4', ['AltRight', 'Alt', 'Alt', 'Alt', 'Alt'], 'fn');
 kbd.appendChild(K5_4);
-let K5_5 = setButton('k5-5', ['ControlRight', 'Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'], 'fn');
+const K5_5 = setButton(
+  'k5-5',
+  ['ControlRight', 'Ctrl', 'Ctrl', 'Ctrl', 'Ctrl'],
+  'fn',
+);
 kbd.appendChild(K5_5);
-let K5_6 = setButton('k5-6', ['ArrowLeft', '←', '←', '←', '←'], 'fn');
+const K5_6 = setButton('k5-6', ['ArrowLeft', '←', '←', '←', '←'], 'fn');
 kbd.appendChild(K5_6);
-let K5_7 = setButton('k5-7', ['ArrowDown', '↓', '↓', '↓', '↓'], 'fn');
+const K5_7 = setButton('k5-7', ['ArrowDown', '↓', '↓', '↓', '↓'], 'fn');
 kbd.appendChild(K5_7);
-let K5_8 = setButton('k5-8', ['ArrowRight', '→', '→', '→', '→'], 'fn');
+const K5_8 = setButton('k5-8', ['ArrowRight', '→', '→', '→', '→'], 'fn');
 kbd.appendChild(K5_8);
 
-let allKey = kbd.querySelectorAll('.button'); // array all button from html
+const allKey = kbd.querySelectorAll('.button'); // array all button from html
 
-let changeKey = (num) => { // change char keyboard and current char for all button
-    allKey.forEach(el => {
-        el.innerHTML = el.arrChar[num];
-        el.currChar = el.arrChar[num];
-    });
-}
-let searchButton = (str) => { // search button from press key
-    allKey.forEach(el => {
-        if (el.arrChar[0] === str) {
-            keyButtonPress = el;
-            //            console.log(keyButtonPress.innerHTML);
-        };
-    })
-}
+const changeKey = (num) => {
+  // change char keyboard and current char for all button
+  allKey.forEach((el) => {
+    el.innerHTML = el.arrChar[num];
+    el.currChar = el.arrChar[num];
+  });
+};
+const searchButton = (str) => {
+  // search button from press key
+  allKey.forEach((el) => {
+    if (el.arrChar[0] === str) {
+      keyButtonPress = el;
+      //            console.log(keyButtonPress.innerHTML);
+    }
+  });
+};
 
 //--------------------------------------------------------
 
-kbd.addEventListener('mousedown', e => { // event listener for keyboard from mouse
-    keyMousePress = e.target;
-    if (keyMousePress.classList.contains('k3-1')) { // check CapsLook
-        keyMousePress.classList.add('buttonPress');
-        keyMousePress.classList.toggle('buttonCapsPress');
-        if (keyMousePress.classList.contains('buttonCapsPress')) {
-            changeKey(setLang2);
-        } else {
-            changeKey(setLang1);
-        }
-        //        console.log('caps ');
-    } else if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) { // check Shift
-        keyMousePress.classList.add('buttonPress');
-        changeKey(setLang1);
-        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
-            changeKey(setLang1);
-        } else {
-            changeKey(setLang2);
-        }
-    } else if (keyMousePress.classList.contains('button')) { // create event for textarea
-        keyMousePress.classList.add('buttonPress');
-        if (!e.target.classList.contains('buttonFn') || e.target.classList.contains('k4-13') || e.target.classList.contains('k5-6') || e.target.classList.contains('k5-7') || e.target.classList.contains('k5-8') || e.target.classList.contains('k5-3') || e.target.classList.contains('k1-14') || e.target.classList.contains('k2-14') || e.target.classList.contains('k2-15') || e.target.classList.contains('k2-1')) {
-            let event = new Event('pressButton', {
-                bubbles: true
-            });
-            event.charButton = e.target.currChar;
-            textArea.dispatchEvent(event);
-        };
-    };
-});
-
-document.addEventListener('mouseup', e => { // restore keyboard after mouseup
-    if (keyMousePress) {
-        if (keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')) {
-            if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
-                changeKey(setLang2);
-            } else {
-                changeKey(setLang1);
-            }
-            keyMousePress.classList.remove('buttonPress');
-        } else {
-            keyMousePress.classList.remove('buttonPress');
-        }
-    };
-});
-
-document.addEventListener('keydown', (e) => { // event listener for keyboard from real keyboard
-    //    console.log('---> ' + e.code);
-    searchButton(e.code);
-    keyButtonPress.classList.add('buttonPress');
-    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') { // check Shift
-        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
-            changeKey(setLang1);
-        } else {
-            changeKey(setLang2);
-        }
-    } else if (e.code === 'CapsLock') { // check CapsLook
-        keyButtonPress.classList.toggle('buttonCapsPress');
-        if (keyButtonPress.classList.contains('buttonCapsPress')) {
-            changeKey(setLang2);
-        } else {
-            changeKey(setLang1);
-        }
-    } else if (kbd.querySelector('.k5-1').classList.contains('buttonPress') &&
-        kbd.querySelector('.k5-2').classList.contains('buttonPress') || kbd.querySelector('.k5-4').classList.contains('buttonPress') && kbd.querySelector('.k5-5').classList.contains('buttonPress')) {
-        if (localStorage.getItem('lang') === 'eng') { // set new language
-            localStorage.setItem('lang', 'rus');
-        } else {
-            localStorage.setItem('lang', 'eng');
-        }
-        //        console.log('>>> ' + localStorage.getItem('lang'));
-        setLang();
-        changeKey(setLang1);
-        if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
-            changeKey(setLang2);
-        } else {
-            changeKey(setLang1);
-        }
-    } else if (keyButtonPress.classList.contains('button')) { // create event for textarea
-        if (!keyButtonPress.classList.contains('buttonFn') || keyButtonPress.classList.contains('k4-13') || keyButtonPress.classList.contains('k5-6') || keyButtonPress.classList.contains('k5-7') || keyButtonPress.classList.contains('k5-8') || keyButtonPress.classList.contains('k5-3') || keyButtonPress.classList.contains('k1-14') || keyButtonPress.classList.contains('k2-14') || keyButtonPress.classList.contains('k2-15') || keyButtonPress.classList.contains('k2-1')) {
-            let event = new Event('pressKey', {
-                bubbles: true
-            });
-            event.charKey = keyButtonPress.currChar;
-            textArea.dispatchEvent(event);
-        };
-    };
-})
-
-document.addEventListener('keyup', (e) => { // restore keyboard after keyup
-    //    console.log(e.code);
-    if (keyButtonPress) {
-        keyButtonPress.classList.remove('buttonPress');
-        if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
-            if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
-                changeKey(setLang2);
-            } else {
-                changeKey(setLang1);
-            }
-        }       
+kbd.addEventListener('mousedown', (e) => {
+  // event listener for keyboard from mouse
+  keyMousePress = e.target;
+  if (keyMousePress.classList.contains('k3-1')) {
+    // check CapsLook
+    keyMousePress.classList.add('buttonPress');
+    keyMousePress.classList.toggle('buttonCapsPress');
+    if (keyMousePress.classList.contains('buttonCapsPress')) {
+      changeKey(setLang2);
+    } else {
+      changeKey(setLang1);
     }
-    allKey.forEach(el => {
-        el.classList.remove('buttonPress');
-    });
-})
+    //        console.log('caps ');
+  } else if (
+    keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')
+  ) {
+    // check Shift
+    keyMousePress.classList.add('buttonPress');
+    changeKey(setLang1);
+    if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+      changeKey(setLang1);
+    } else {
+      changeKey(setLang2);
+    }
+  } else if (keyMousePress.classList.contains('button')) {
+    // create event for textarea
+    keyMousePress.classList.add('buttonPress');
+    if (
+      !e.target.classList.contains('buttonFn') || e.target.classList.contains('k4-13') || e.target.classList.contains('k5-6') || e.target.classList.contains('k5-7') || e.target.classList.contains('k5-8') || e.target.classList.contains('k5-3') || e.target.classList.contains('k1-14') || e.target.classList.contains('k2-14') || e.target.classList.contains('k2-15') || e.target.classList.contains('k2-1')
+    ) {
+      const event = new Event('pressButton', {
+        bubbles: true,
+      });
+      event.charButton = e.target.currChar;
+      textArea.dispatchEvent(event);
+    }
+  }
+});
+
+document.addEventListener('mouseup', () => {
+  // restore keyboard after mouseup
+  if (keyMousePress) {
+    if (
+      keyMousePress.classList.contains('k4-1') || keyMousePress.classList.contains('k4-14')
+    ) {
+      if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+        changeKey(setLang2);
+      } else {
+        changeKey(setLang1);
+      }
+      keyMousePress.classList.remove('buttonPress');
+    } else {
+      keyMousePress.classList.remove('buttonPress');
+    }
+  }
+});
+
+document.addEventListener('keydown', (e) => {
+  // event listener for keyboard from real keyboard
+  //    console.log('---> ' + e.code);
+  searchButton(e.code);
+  keyButtonPress.classList.add('buttonPress');
+  if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+    // check Shift
+    if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+      changeKey(setLang1);
+    } else {
+      changeKey(setLang2);
+    }
+  } else if (e.code === 'CapsLock') {
+    // check CapsLook
+    keyButtonPress.classList.toggle('buttonCapsPress');
+    if (keyButtonPress.classList.contains('buttonCapsPress')) {
+      changeKey(setLang2);
+    } else {
+      changeKey(setLang1);
+    }
+  } else if (
+    (kbd.querySelector('.k5-1').classList.contains('buttonPress') && kbd.querySelector('.k5-2').classList.contains('buttonPress')) || (kbd.querySelector('.k5-4').classList.contains('buttonPress') && kbd.querySelector('.k5-5').classList.contains('buttonPress'))
+  ) {
+    if (localStorage.getItem('lang') === 'eng') {
+      // set new language
+      localStorage.setItem('lang', 'rus');
+    } else {
+      localStorage.setItem('lang', 'eng');
+    }
+    //        console.log('>>> ' + localStorage.getItem('lang'));
+    setLang();
+    changeKey(setLang1);
+    if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+      changeKey(setLang2);
+    } else {
+      changeKey(setLang1);
+    }
+  } else if (keyButtonPress.classList.contains('button')) {
+    // create event for textarea
+    if (
+      !keyButtonPress.classList.contains('buttonFn') || keyButtonPress.classList.contains('k4-13') || keyButtonPress.classList.contains('k5-6') || keyButtonPress.classList.contains('k5-7') || keyButtonPress.classList.contains('k5-8') || keyButtonPress.classList.contains('k5-3') || keyButtonPress.classList.contains('k1-14') || keyButtonPress.classList.contains('k2-14') || keyButtonPress.classList.contains('k2-15') || keyButtonPress.classList.contains('k2-1')
+    ) {
+      const event = new Event('pressKey', {
+        bubbles: true,
+      });
+      event.charKey = keyButtonPress.currChar;
+      textArea.dispatchEvent(event);
+    }
+  }
+});
+
+document.addEventListener('keyup', (e) => {
+  // restore keyboard after keyup
+  //    console.log(e.code);
+  if (keyButtonPress) {
+    keyButtonPress.classList.remove('buttonPress');
+    if (e.code === 'ShiftLeft' || e.code === 'ShiftRight') {
+      if (kbd.querySelector('.k3-1').classList.contains('buttonCapsPress')) {
+        changeKey(setLang2);
+      } else {
+        changeKey(setLang1);
+      }
+    }
+  }
+  allKey.forEach((el) => {
+    el.classList.remove('buttonPress');
+  });
+});
