@@ -28,10 +28,6 @@ textArea.classList.add('input_area');
 document.querySelector('.wrapper').appendChild(textArea);
 textArea.id = 'textArea';
 
-textArea.addEventListener('keypress', (e) => e.preventDefault()); // preventDefault for keyboard
-textArea.addEventListener('keyup', (e) => e.preventDefault());
-textArea.addEventListener('keydown', (e) => e.preventDefault());
-
 textArea.addEventListener('pressButton', (e) => {
   // add custom event listener from mouse
   if (e.charButton === 'Enter') {
@@ -242,6 +238,10 @@ const K5_7 = setButton('k5-7', ['ArrowDown', '↓', '↓', '↓', '↓'], 'fn');
 kbd.appendChild(K5_7);
 const K5_8 = setButton('k5-8', ['ArrowRight', '→', '→', '→', '→'], 'fn');
 kbd.appendChild(K5_8);
+
+document.addEventListener('keypress', (e) => e.preventDefault()); // preventDefault for keyboard
+document.addEventListener('keyup', (e) => e.preventDefault());
+document.addEventListener('keydown', (e) => e.preventDefault());
 
 const allKey = kbd.querySelectorAll('.button'); // array all button from html
 
