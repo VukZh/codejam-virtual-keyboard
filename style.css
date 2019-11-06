@@ -1,0 +1,368 @@
+* {
+    font-family: sans-serif;
+    margin: 0;
+    padding: 0;
+    border: 0;
+    font-size: 1.3rem;
+    box-sizing: border-box;
+    user-select: none;
+}
+
+.wrapper {
+    position: relative;
+    width: 1500px;
+    height: 850px;
+    margin: 0 auto;
+    /*    background-color: CORNSILK;*/
+    background-color: CORNSILK;
+    padding-top: 20px;
+}
+
+.keyboard {
+    width: 88%;
+    height: 449px;
+    margin: 40px auto;
+    padding: 10px;
+    background-color: GAINSBORO;
+    box-shadow: 7px 7px 20px -10px rgba(0, 0, 0, 0.75);
+    border: 2px solid DIMGRAY;
+    display: grid;
+    grid-template-columns: repeat(30, 1fr);
+    grid-template-rows: repeat(5, 1fr);
+    grid-gap: 3px;
+    grid-template-areas:
+        "k1-1 k1-1 k1-2 k1-2 k1-3 k1-3 k1-4 k1-4 k1-5 k1-5 k1-6 k1-6 k1-7 k1-7 k1-8 k1-8 k1-9 k1-9 k1-10 k1-10 k1-11 k1-11 k1-12 k1-12 k1-13 k1-13 k1-14 k1-14 k1-14  k1-14"
+        "k2-1 k2-1 k2-2 k2-2 k2-3 k2-3 k2-4 k2-4 k2-5 k2-5 k2-6 k2-6 k2-7 k2-7 k2-8 k2-8 k2-9 k2-9 k2-10 k2-10 k2-11 k2-11 k2-12 k2-12 k2-13 k2-13 k2-14 k2-14 k2-15 k2-15"
+        "k3-1 k3-1 k3-1 k3-1 k3-2 k3-2 k3-3 k3-3 k3-4 k3-4 k3-5 k3-5 k3-6 k3-6 k3-7 k3-7 k3-8 k3-8 k3-9 k3-9 k3-10 k3-10 k3-11 k3-11 k3-12 k3-12 k3-13 k3-13 k2-15 k2-15"
+        "k4-1 k4-1 k4-1 k4-1 k4-2 k4-2 k4-3 k4-3 k4-4 k4-4 k4-5 k4-5 k4-6 k4-6 k4-7 k4-7 k4-8 k4-8 k4-9 k4-9 k4-10 k4-10 k4-11 k4-11 k4-12 k4-12 k4-13 k4-13 k4-14 k4-14"
+        "k5-1 k5-1 k5-1 k5-2 k5-2 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-3 k5-4 k5-4 k5-5 k5-5 k5-6 k5-6 k5-7 k5-7 k5-8 k5-8"
+}
+
+
+.button {
+    background-color: GRAY;
+    margin: 3px 3px;
+    border-radius: 12px;
+    text-align: center;
+    padding-top: 29px;
+    color: white;
+    box-shadow: 4px 4px 8px 0px rgba(0, 0, 0, 0.75);
+}
+
+/*
+.button:hover {
+    font-weight: 700;
+    border 2px solid black;
+}
+*/
+.buttonFn {
+    background-color: DIMGRAY;
+    color yellow;
+}
+
+.buttonPress {
+    background-color: #3D3D3D;
+    box-shadow: 2px 2px 4px 0px rgba(0, 0, 0, 0.75);
+    animation: rad 0.3s;
+
+}
+
+@keyframes rad {
+    from {
+        border-radius: 20px;
+    }
+
+    to {
+        border-radius: 12px;
+    }
+}
+
+.buttonCapsPress {
+    /*    background-color: DarkSlateGrey;*/
+    color: ORANGE;
+    /*    font-weight: 700;*/
+    /*    padding: 10px;*/
+    /*    border 4px solid black;*/
+}
+
+
+.k1-1 {
+    grid-area: k1-1;
+}
+
+.k1-2 {
+    grid-area: k1-2;
+}
+
+.k1-3 {
+    grid-area: k1-3;
+}
+
+.k1-4 {
+    grid-area: k1-4;
+}
+
+.k1-5 {
+    grid-area: k1-5;
+}
+
+.k1-6 {
+    grid-area: k1-6;
+}
+
+.k1-7 {
+    grid-area: k1-7;
+}
+
+.k1-8 {
+    grid-area: k1-8;
+}
+
+.k1-9 {
+    grid-area: k1-9;
+}
+
+.k1-10 {
+    grid-area: k1-10;
+}
+
+.k1-11 {
+    grid-area: k1-11;
+}
+
+.k1-12 {
+    grid-area: k1-12;
+}
+
+.k1-13 {
+    grid-area: k1-13;
+}
+
+.k1-14 {
+    grid-area: k1-14;
+}
+
+
+.k2-1 {
+    grid-area: k2-1;
+}
+
+.k2-2 {
+    grid-area: k2-2;
+}
+
+.k2-3 {
+    grid-area: k2-3;
+}
+
+.k2-4 {
+    grid-area: k2-4;
+}
+
+.k2-5 {
+    grid-area: k2-5;
+}
+
+.k2-6 {
+    grid-area: k2-6;
+}
+
+.k2-7 {
+    grid-area: k2-7;
+}
+
+.k2-8 {
+    grid-area: k2-8;
+}
+
+.k2-9 {
+    grid-area: k2-9;
+}
+
+.k2-10 {
+    grid-area: k2-10;
+}
+
+.k2-11 {
+    grid-area: k2-11;
+}
+
+.k2-12 {
+    grid-area: k2-12;
+}
+
+.k2-13 {
+    grid-area: k2-13;
+}
+
+.k2-14 {
+    grid-area: k2-14;
+}
+
+.k2-15 {
+    grid-area: k2-15;
+}
+
+
+.k3-1 {
+    grid-area: k3-1;
+}
+
+.k3-2 {
+    grid-area: k3-2;
+}
+
+.k3-3 {
+    grid-area: k3-3;
+}
+
+.k3-4 {
+    grid-area: k3-4;
+}
+
+.k3-5 {
+    grid-area: k3-5;
+}
+
+.k3-6 {
+    grid-area: k3-6;
+}
+
+.k3-7 {
+    grid-area: k3-7;
+}
+
+.k3-8 {
+    grid-area: k3-8;
+}
+
+.k3-9 {
+    grid-area: k3-9;
+}
+
+.k3-10 {
+    grid-area: k3-10;
+}
+
+.k3-11 {
+    grid-area: k3-11;
+}
+
+.k3-12 {
+    grid-area: k3-12;
+}
+
+.k3-13 {
+    grid-area: k3-13;
+}
+
+/*
+.k3-14 {
+    grid-area: k3-14;
+}
+*/
+
+
+.k4-1 {
+    grid-area: k4-1;
+}
+
+.k4-2 {
+    grid-area: k4-2;
+}
+
+.k4-3 {
+    grid-area: k4-3;
+}
+
+.k4-4 {
+    grid-area: k4-4;
+}
+
+.k4-5 {
+    grid-area: k4-5;
+}
+
+.k4-6 {
+    grid-area: k4-6;
+}
+
+.k4-7 {
+    grid-area: k4-7;
+}
+
+.k4-8 {
+    grid-area: k4-8;
+}
+
+.k4-9 {
+    grid-area: k4-9;
+}
+
+.k4-10 {
+    grid-area: k4-10;
+}
+
+.k4-11 {
+    grid-area: k4-11;
+}
+
+.k4-12 {
+    grid-area: k4-12;
+}
+
+.k4-13 {
+    grid-area: k4-13;
+}
+
+.k4-14 {
+    grid-area: k4-14;
+}
+
+
+
+.k5-1 {
+    grid-area: k5-1;
+}
+
+.k5-2 {
+    grid-area: k5-2;
+}
+
+.k5-3 {
+    grid-area: k5-3;
+}
+
+.k5-4 {
+    grid-area: k5-4;
+}
+
+.k5-5 {
+    grid-area: k5-5;
+}
+
+.k5-6 {
+    grid-area: k5-6;
+}
+
+.k5-7 {
+    grid-area: k5-7;
+}
+
+.k5-8 {
+    grid-area: k5-8;
+}
+
+
+.input_area {
+    display: block;
+    width: 90%;
+    height: 300px;
+    margin: 0 auto;
+    background-color: LIGHTYELLOW;
+    border: 2px solid BURLYWOOD;
+    font-size: 2rem;
+
+}
+
+/*# sourceMappingURL=style.css.map */
